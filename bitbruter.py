@@ -46,16 +46,16 @@ def wif(secret_exponent):
     var = hashlib.sha256(binascii.unhexlify(hashlib.sha256(binascii.unhexlify(var80)).hexdigest())).hexdigest()
     return str(base58.b58encode(binascii.unhexlify(str(var80) + str(var[0:8]))), 'utf-8')
 
-def database(address):
+def database(address, secret_exponent, WIF):
     with open("data-base", "r") as m:
         add = m.read().split()
         for ad in add:
             continue
         if address in add:
             data = open("Win.txt","a")
-            data.write("Bingo " + str(sect)+"\n" +str(address)+"\n"+str(WIF)+"\n"+"\n")
+            data.write("Bingo Address:" + str(secret_exponent)+"\nAddress: " +str(address)+"\nWIF: "+str(WIF)+"\n"+"\n")
             data.close()
-            
+
             return address
         else:
             i = 'No address with balance'
@@ -155,7 +155,7 @@ def main():
             public_key = pubkey(secret_exponent)
             address = addr(public_key)
             WIF = wif(secret_exponent)
-            data_base = database(address)
+            data_base = database(address, secret_exponent, WIF)
             window.Element('_DATE_').Update(str(datetime.datetime.now()-start_time))
             window.Element('address').Update(str(address))
             window.Element('privatekey').Update(str(secret_exponent))
